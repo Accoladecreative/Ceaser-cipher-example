@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Caesar Cipher</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+       
+        <form>
+        <div class="container mt-5">
+    <h3 class="text-center">Ceaser Cipher</h3>
+  </div>
+          <div class="form-group">
+            <label for="words">Words:</label>
+            <input type="text" class="form-control" id="words">
+          </div>
+
+          <div class="form-group">
+            <label for="key">Key:</label>
+            <input type="number" class="form-control" id="key">
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary" onclick="encrypt()">Encrypt</button>
+            <button type="button" class="btn btn-primary" onclick="decrypt()">Decrypt</button>
+          </div>
+
+          <div class="form-group">
+            <label for="output">Output:</label>
+            <input type="text" class="form-control" id="output" readonly>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Bootstrap JS (Optional) -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function encrypt() {
+      var words = document.getElementById("words").value;
+      var key = parseInt(document.getElementById("key").value);
+      var encryptedMessage = '';
+
+      for (var i = 0; i < words.length; i++) {
+        var char = words[i];
+        if (char.match(/[a-z]/i)) {
+          var asciiOffset = char.toUpperCase() === char ? 65 : 97;
+          var encryptedChar = String.fromCharCode(
+            ((char.charCodeAt() - asciiOffset + key) % 26) + asciiOffset
+          );
+          encryptedMessage += encryptedChar;
+        } else {
+          encryptedMessage += char;
+        }
+      }
+
+      document.getElementById("output").value = encryptedMessage;
+    }
+
+    function decrypt() {
+      var output = document.getElementById("output").value;
+      var key = parseInt(document.getElementById("key").value);
+      var decryptedMessage = '';
+
+      for (var i = 0; i < output.length; i++) {
+        var char = output[i];
+        if (char.match(/[a-z]/i)) {
+          var asciiOffset = char.toUpperCase() === char ? 65 : 97;
+          var decryptedChar = String.fromCharCode(
+            ((char.charCodeAt() - asciiOffset - key + 26) % 26) + asciiOffset
+          );
+          decryptedMessage += decryptedChar;
+        } else {
+          decryptedMessage += char;
+        }
+      }
+
+      document.getElementById("words").value = decryptedMessage;
+    }
+  </script>
+</body>
+</html>
